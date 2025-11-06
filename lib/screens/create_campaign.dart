@@ -90,7 +90,7 @@ class _CreateCampaignState extends State<CreateCampaign> {
                   padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   child: CustomBorderButton(callBackFunction: () {
                     Navigator.pop(context);
-                  }, label: "back", borderColor: Colors.grey, txtColor: kPrimary),
+                  }, label: "back", borderColor: Colors.grey, txtColor: Colors.grey[300]!),
                 )
 
               ],
