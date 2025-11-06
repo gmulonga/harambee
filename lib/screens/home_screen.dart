@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:harambee/screens/create_campaign.dart';
 import 'package:harambee/utils/constants.dart';
+import 'package:harambee/widgets/campaign_card.dart';
 import 'package:harambee/widgets/custom_header.dart';
 import 'package:animations/animations.dart';
 
@@ -21,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             const SizedBox(height: 10),
             customHeader(label: "Home", icon: Icons.home),
+            CampaignCard(title: "John's Wedding", amountRaised: 10000, goalAmount: 20000),
           ],
         ),
       ),
