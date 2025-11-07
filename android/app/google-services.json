@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "854709338373",
+    "project_id": "harambee-e2e25",
+    "storage_bucket": "harambee-e2e25.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:854709338373:android:f174a97be4e8539f8e376c",
+        "android_client_info": {
+          "package_name": "com.example.harambee"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBW6H30-yee-b5i8XUKiPzNwpPuJqXAL2c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

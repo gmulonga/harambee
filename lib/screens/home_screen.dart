@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:harambee/controllers/create_campaign_controller.dart';
 import 'package:harambee/screens/create_campaign.dart';
 import 'package:harambee/utils/constants.dart';
 import 'package:harambee/widgets/campaign_card.dart';
 import 'package:harambee/widgets/custom_header.dart';
 import 'package:animations/animations.dart';
+import 'package:harambee/models/campaign_model.dart';
 
-import 'campaign_details.dart';
+class HomeScreen extends StatelessWidget {
+  final CampaignController controller = Get.put(CampaignController());
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,21 +22,34 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             const SizedBox(height: 10),
             customHeader(label: "Home", icon: Icons.home),
-            CampaignCard(title: "John's Wedding", amountRaised: 10000, goalAmount: 20000, description: "This is a sample description",),
-            CampaignCard(title: "John's Wedding", amountRaised: 10000, goalAmount: 20000, description: "m Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem I",),
+
+            Expanded(
+              child: Obx(() {
+                if (controller.campaigns.isEmpty) {
+                  return const Center(child: Text("No campaigns yet."));
+                }
+
+                return ListView.builder(
+                  itemCount: controller.campaigns.length,
+                  itemBuilder: (context, index) {
+                    final Campaign campaign = controller.campaigns[index];
+                    return CampaignCard(campaign: campaign);
+                  },
+                );
+              }),
+            ),
           ],
         ),
       ),
-
       floatingActionButton: OpenContainer(
         closedElevation: 6,
         closedShape: const CircleBorder(),
         transitionDuration: const Duration(milliseconds: 500),
-        openBuilder: (context, _) => const CreateCampaign(),
+        openBuilder: (context, _) => CreateCampaign(),
         closedBuilder: (context, openContainer) => FloatingActionButton(
           onPressed: openContainer,
           backgroundColor: kPrimary,
-          child: const Icon(Icons.add, color: kWhite,),
+          child: const Icon(Icons.add, color: kWhite),
         ),
       ),
     );

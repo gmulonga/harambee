@@ -8,7 +8,7 @@ class CustomButton extends StatefulWidget {
     required this.txtColor,
   });
 
-  final VoidCallback callBackFunction;
+  final VoidCallback? callBackFunction;
   final String label;
   final Color backgroundColor;
   final Color txtColor;

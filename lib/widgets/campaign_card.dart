@@ -2,27 +2,21 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:harambee/utils/constants.dart';
 import 'package:harambee/screens/campaign_details.dart';
+import 'package:harambee/models/campaign_model.dart';
 
 class CampaignCard extends StatelessWidget {
-  final String title;
-  final String? description;
-  final double amountRaised;
-  final double goalAmount;
+  final Campaign campaign;
 
-  const CampaignCard({
-    Key? key,
-    required this.title,
-    this.description,
-    required this.amountRaised,
-    required this.goalAmount,
-  }) : super(key: key);
+  const CampaignCard({Key? key, required this.campaign}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final double progress = goalAmount > 0 ? (amountRaised / goalAmount).clamp(0.0, 1.0) : 0.0;
+    final double progress = campaign.targetAmount > 0
+        ? (campaign.amountRaised / campaign.targetAmount).clamp(0.0, 1.0)
+        : 0.0;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 8),
       child: OpenContainer(
         transitionDuration: const Duration(milliseconds: 600),
         openColor: Colors.white,
@@ -32,12 +26,7 @@ class CampaignCard extends StatelessWidget {
         closedShape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
-        openBuilder: (context, _) => CampaignDetails(
-          title: title,
-          description: description,
-          amountRaised: amountRaised,
-          goalAmount: goalAmount,
-        ),
+        openBuilder: (context, _) => CampaignDetails(campaign: campaign),
         closedBuilder: (context, openContainer) => InkWell(
           onTap: openContainer,
           borderRadius: BorderRadius.circular(16),
@@ -72,17 +61,17 @@ class CampaignCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        title,
+                        campaign.title,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
                           color: Colors.black87,
                         ),
                       ),
-                      if (description != null && description!.isNotEmpty) ...[
+                      if (campaign.description.isNotEmpty) ...[
                         const SizedBox(height: 6),
                         Text(
-                          description!,
+                          campaign.description,
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[600],
@@ -107,7 +96,7 @@ class CampaignCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Ksh ${amountRaised.toStringAsFixed(0)} raised",
+                            "Ksh ${campaign.amountRaised.toStringAsFixed(0)} raised",
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w600,
@@ -115,7 +104,7 @@ class CampaignCard extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "Goal: Ksh ${goalAmount.toStringAsFixed(0)}",
+                            "Goal: Ksh ${campaign.targetAmount.toStringAsFixed(0)}",
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.grey[600],
